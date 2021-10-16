@@ -1,0 +1,36 @@
+<%= render "shared/navbar" %>
+
+<div class="row">
+  <h3 style="margin: 0 2rem; line-heigth: 38px"><%= "#{@stock.symbol} / #{@stock&.company_name} / #{@stock&.sector}" %></h3>
+  <p style="line-height: 38px; margin-bottom: 0">Last updated on: <%= @stock.last_call_to_api %></p>
+</div>
+<div style="width: 80vw; margin-left: 5vw;">
+  <table>
+    <thead style="position: sticky; top: 0; background: white;">
+      <tr>
+        <th>Date</th>
+        <th>Open</th>
+        <th>High</th>
+        <th>Low</th>
+        <th>Close</th>
+        <th>Adj. Close</th>
+        <th>Daily Return</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @infos.each do |info| %>
+      <tr>
+        <td><%= info["date"] %></td>
+        <td><%= info["open"].to_f.round(2) %></td>
+        <td><%= info["high"].to_f.round(2) %></td>
+        <td><%= info["low"].to_f.round(2) %></td>
+        <td><%= info["close"].to_f.round(2) %></td>
+        <td><%= info["adj_close"].to_f.round(2) %></td>
+        <td><%= info["daily_return"].to_f.round(4)%></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%= link_to 'Edit', edit_stock_path(@stock) %>

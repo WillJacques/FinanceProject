@@ -1,0 +1,53 @@
+<%= render "shared/navbar" %>
+<div style="margin: 3rem">
+  <h1>Stocks (<%= Stock.count %>)</h1>
+  <div style="width: 35vw; margin-left: 1rem; margin-bottom: 1rem">
+    <div class="row">
+      <label style="width: 15vw; margin-bottom: 0; line-height: 36px;" for="table">Search a stock in table</label>
+      <input type="text" id="mystocksearch" onkeyup="searchStockTable()" placeholder="Search for stocks.." style="width: 20vw; margin-bottom: 0">
+    </div>
+  </div>
+  <div style="width: 35vw">
+    <%= form_with(url: stocks_search_path, method: 'post', local: true) do %>
+      <div class="row" style="margin: 0">
+        <%= label_tag :ticker, 'Add a stock to database', style:"width: 15vw; margin-bottom: 0; line-height: 36px;"%>
+        <%= text_field_tag :ticker, nil, placeholder: 'Ex. AMZN', style:"width: 12vw; margin-bottom: 0; border-radius: 0.4rem 0 0 0.4rem" %>
+        <%= button_tag 'Add', style:"margin-bottom: 0; border-radius: 0 0.4rem 0.4rem 0; width: 8vw" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="apple_pagination">
+  <%= will_paginate @stocks, :previous_label => 'Previous', :next_label => 'Next' %>
+</div>
+<div id="stocktable" style="width: 80vw; margin: auto;">
+<% if @stocks.present? %>
+  <% @stocks.each_with_index do |stock, i| %>
+    <div class="row">
+      <strong nowrap style="padding: 18px 0;width: 30vw"><%= stock.symbol %> (<%= stock&.company_name || "No name in database" %>)<small> Last API update: <%= stock.last_call_to_api %></small></strong>
+      <div style="padding: 10px 0;">
+        <%= link_to 'Show', stock_path(stock), class:"button button-outline m-0" %>
+        <%= link_to 'Candlestick', stocks_candlestick_path(stock), class:"button button-outline m-0" %>
+        <%= link_to 'Edit', edit_stock_path(stock), class:"button button-outline m-0" %>
+        <a class="button button-outline m-0" id="destroybutton<%=i%>">Destroy</a>
+      </div>
+    </div>
+    <script>
+      document.querySelector("#destroybutton<%=i%>").addEventListener('click', () => {
+        ConfirmWindow.open({
+          title: "Do you want to delete ?",
+          message: "This action in irreversible and can't be restore",
+          okText: "Yeah",
+          cancelText: "Nah",
+          onok: () => Rails.ajax({
+                      url: "/stocks/<%=stock.id%>",
+                      type: "delete"
+                    }),
+          oncancel: () => false
+        });
+      })
+    </script>
+  <% end %>
+<% end %>
+</div>

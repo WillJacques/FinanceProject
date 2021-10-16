@@ -1,0 +1,13 @@
+<div class="background-image" style="height: 100vh; width: 100vw">
+  <div class="login-form center" style="width: 40vw; margin: auto; padding: 2rem; background-color: white; border-radius: 1rem;">
+    <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <%= f.input :email %>
+      <%= f.input :password %>
+      <div style="width: 100%">
+        <%= f.submit "Log in", style: "margin: 0 auto; margin-top: 1rem; display:block" %>
+      </div>
+    <% end %>
+    <%= render "users/shared/links" %>
+  </div>
+</div>
+

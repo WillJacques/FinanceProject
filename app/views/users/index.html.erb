@@ -1,0 +1,38 @@
+<%= render "shared/navbar" %>
+
+<h1>Users</h1>
+
+<div id="usertable" style="width: 80vw; margin: auto;">
+<% if @users.present? %>
+  <% @users.each_with_index do |user, i| %>
+    <div class="row">
+      <strong nowrap style="padding: 18px 0;width: 30vw"><%= user.fullname %></strong>
+      <div style="padding: 10px 0;">
+        <%= link_to 'Show', user_path(user), class:"button button-outline m-0" %>
+        <%= link_to 'Last Query', users_last_query_path(user), class:"button button-outline m-0" %>
+        <%= link_to 'Edit', edit_user_path(user), class:"button button-outline m-0" %>
+        <a class="button button-outline m-0" id="destroybutton<%=i%>">Destroy</a>
+      </div>
+    </div>
+    <script>
+      document.querySelector("#destroybutton<%=i%>").addEventListener('click', () => {
+        ConfirmWindow.open({
+          title: "Do you want to delete ?",
+          message: "This action in irreversible and can't be restore",
+          okText: "Yeah",
+          cancelText: "Nah",
+          onok: () => Rails.ajax({
+                      url: "/users/<%=user.id%>",
+                      type: "delete"
+                    }),
+          oncancel: () => false
+        });
+      })
+    </script>
+  <% end %>
+<% end %>
+</div>
+
+<br>
+
+<%= link_to 'New User', new_user_path %>

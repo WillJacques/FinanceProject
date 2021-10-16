@@ -1,0 +1,28 @@
+<%= render "shared/navbar" %>
+<div class="row" style="heigth: 2rem">
+  <h3 style="margin: 0 2rem;"><%= "#{@stock.symbol} / #{@stock&.company_name}" %></h3>
+  <p style="line-height: 36px; margin-bottom: 0">Last updated on: <%= @stock.last_call_to_api %></p>
+</div>
+<div id="chart_div" style="width: 95vw; height: 80vh;"></div>
+
+<%= javascript_tag do -%>
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable(<%= @data.to_json.html_safe -%>, true);
+
+    var options = {
+      legend:'none',
+      candlestick: {
+          fallingColor: { strokeWidth: 0, fill: '#a52714' }, // red
+          risingColor: { strokeWidth: 0, fill: '#0f9d58' }   // green
+        },
+      chartArea:{left:100,top:25,width:'90%',height:'75%'}
+    };
+
+    var chart = new google.visualization.CandlestickChart(document.getElementById('chart_div'));
+
+    chart.draw(data, options);
+  }
+<% end -%>

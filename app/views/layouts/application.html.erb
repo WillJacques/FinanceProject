@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Finance</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <script src="https://kit.fontawesome.com/8d4304d9cc.js" crossorigin="anonymous"></script>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body style="height: 100vh; margin: 0">
+    <% if flash[:alert] || flash[:notice]%>
+      <script>
+        AlertWindow.open({
+            title: "<%= flash[:alert] ? "Alert" : "Notice" %>",
+            message: "<%= flash[:alert] || flash[:notice] %>",
+            color: "<%= flash[:alert] ? "#FF7F7F" : "#90EE90"%>",
+            okText: "Ok",
+            onok: () => false,
+            oncancel: () => false
+          });
+      </script>
+    <% end %>
+    <%= yield %>
+  </body>
+</html>

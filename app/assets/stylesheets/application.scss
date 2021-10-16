@@ -1,0 +1,110 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+@import "milligram";
+
+#last-query-table {
+  th:not(:first-child):hover {
+    background-color: #9b4dca;
+    color: white;
+  }
+}
+
+#nav-bar {
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #606c76;
+  }
+
+  li {
+    float: left;
+    margin-bottom: 0;
+  }
+
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+
+  /* Change the link color to #111 (black) on hover */
+  li a:hover {
+    background-color: #9b4dca;
+  }
+
+  .active {
+    background-color: #000;
+  }
+}
+
+.apple_pagination {
+  background: #606c76;
+  text-align: center;
+  padding: 1em;
+  cursor: default;
+  color: white;
+
+  a,
+  span {
+    padding: 0.2em 0.3em;
+  }
+  .disabled {
+    color: #aaaaaa;
+  }
+  .current {
+    font-style: normal;
+    background-color: #9b4dca;
+    display: inline-block;
+    width: 1.4em;
+    height: 1.4em;
+    line-height: 1.5;
+    -moz-border-radius: 1em;
+    -webkit-border-radius: 1em;
+    border-radius: 1em;
+  }
+  a {
+    text-decoration: none;
+    color: white;
+  }
+}
+
+.button-black {
+  border-radius: 1rem;
+  background-color: black;
+  border-color: black;
+}
+
+.button-black:hover {
+  background-color: #9b4dca;
+}
+
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.background-image{
+  background-image: image-url('milligram.png'); 
+  background-size: cover;
+}

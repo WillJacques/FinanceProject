@@ -1,0 +1,55 @@
+<%= render "shared/navbar" %>
+
+<div class="row" style="heigth: 2rem">
+  <h3 style="margin: 0 2rem;">Last Query</h3>
+  <p style="line-height: 36px; margin-bottom: 0"></p>
+</div>
+<div style="width: 80vw; margin-left: 5vw;">
+  <table id="last-query-table">
+  <% if @last_query.first.is_a?(Hash) %>
+    <thead style="position: sticky; top: 0; background: white;">
+      <tr>
+      <% @last_query.first.each_with_index do |(key,value), index| %>
+        <% if index == 0 %>
+          <th></th>
+        <% else %>
+          <th style="cursor: pointer;" onclick="sortLastQueryTable(<%= index %>)"><%= key.upcase %></th>
+        <% end %>
+      <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @last_query.each do |line| %>
+      <tr>
+        <% line.each do |key, value| %>
+          <% if key == "id" %>
+          <td>
+            <%= link_to '<i class="fas fa-eye"></i>'.html_safe, stock_path(value) %>
+          </td>      
+          <% else %>
+          <td><%= value %></td>      
+          <% end %>
+        <% end %>
+      </tr>
+      <% end %>
+    </tbody>
+  <% else %>
+    <thead style="position: sticky; top: 0; background: white;">
+      <tr>
+      <% @last_query.first.each_with_index do |value, index| %>
+        <th style="cursor: pointer; <%= "width: 1px" if index.zero? %>" onclick="sortLastQueryTable(<%= index %>)"><%= value.is_a?(String) ? value.upcase : value %></th>
+      <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @last_query.drop(1).each do |array| %>
+      <tr>
+        <% array.each do |value| %>
+          <td><%= value %></td> 
+        <% end %>
+      </tr>
+      <% end %>
+    </tbody>
+  <% end %>
+  </table>
+</div>
